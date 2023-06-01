@@ -19,21 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/turnos")
 public class TurnoController {
 
+    private String token;
+    
     @Autowired
     TurnoService turnoController;
 
+    @GetMapping("/{name}/{clave}")
+    public Turno logearTurno(@PathParam(value = "name") String name, @PathParam(value = "clave") String clave) throws Exception {
+        Turno turnoToken = turnoController.login(name, clave);
+        token = turnoToken.getToken();
+        return turnoToken;
+    }
+    
     @GetMapping(value = "/all")
-    public List<Turno> getAllturnos(@RequestHeader(value = "token") String token) throws Exception {
-        return turnoController.obtenerTurnos(token);
+    public List<Turno> getAllturnos() throws Exception {
+        return turnoController.obtenerTurnos(this.token);
     }
 
     @GetMapping(value = "/turno/{id}")
-    public Turno obetnerTurnoId(@PathVariable Long id) {
-        return turnoController.obetenerTurnoId(id);
+    public Turno obetnerTurnoId(@PathVariable Long id) throws Exception {
+        return turnoController.obetenerTurnoId(id, this.token);
     }
 
-    @GetMapping("/{name}/{clave}")
-    public Turno logearTurno(@PathParam(value = "name") String name, @PathParam(value = "clave") String clave) throws Exception {
-        return turnoController.login(name, clave);
-    }
+    
 }

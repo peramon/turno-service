@@ -29,8 +29,10 @@ public class TurnoService {
         return turnoRepository.findAll();
     }
     
-    public Turno obetenerTurnoId(Long id){
-        validarToken();
+    public Turno obetenerTurnoId(Long id, String token) throws Exception{
+        if(!validTurno(token)){
+            throw new Exception("ERRO EN CONSULTA");
+        }
         return turnoRepository.findById(id).orElse(null);
     }
     
