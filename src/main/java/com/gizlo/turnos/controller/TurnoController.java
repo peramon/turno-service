@@ -24,6 +24,7 @@ public class TurnoController {
     @Autowired
     TurnoService turnoController;
 
+    // TODO solo funciona con el primer login, revisar como arreglarlo
     @GetMapping("/{name}/{clave}")
     public Turno logearTurno(@PathParam(value = "name") String name, @PathParam(value = "clave") String clave) throws Exception {
         Turno turnoToken = turnoController.login(name, clave);

@@ -50,13 +50,14 @@ public class TurnoService {
         return turno;
     }
     
-    public void validarToken(){
+   /* public void validarToken(){
         Turno turno = turnoRepository.findById(1L).get();
         String token = obtenerToken(turno);
         log.warn("token: "+token);
         boolean valid = validTurno(token);
         log.warn("valid: " + valid);
-    }
+    }*/
+    
     public String obtenerToken(Turno turno){
         String data = turno.crearString();
         return Base64.encodeBase64String(data.getBytes());
