@@ -22,20 +22,26 @@ public class TurnoService {
     @Autowired
     ITurno turnoRepository;
     
-    public List<Turno> obtenerTurnos(){
+    public List<Turno> obtenerTurnos(String token) throws Exception{
+        if(!validTurno(token)){
+            throw new Exception("ERRO EN CONSULTA");
+        }
         return turnoRepository.findAll();
     }
     
     public Turno obetenerTurnoId(Long id){
+        validarToken();
         return turnoRepository.findById(id).orElse(null);
     }
     
     // User validation
-    public Turno login(String userName, String clave) throws Exception{
-        Turno turno = turnoRepository.findByUsuarioClave(userName, clave);
+    public Turno login(String usuario, String clave) throws Exception{
+        Turno turno = turnoRepository.findByUsuarioClave(usuario, clave);
+        log.warn("USUARIO" + turno);
         if(turno == null){
             throw new Exception("ERROR DE USUARIO");
         }
+        
         turno.setUuid(UUID.randomUUID().toString());
         turnoRepository.save(turno);
         turno.setToken(obtenerToken(turno));
@@ -61,7 +67,5 @@ public class TurnoService {
         String valid = turno.crearString();
         return input.equals(valid);
     }
-    
-    
-    
+     
 }
