@@ -7,6 +7,7 @@ package com.gizlo.turnos.service;
 import com.gizlo.turnos.model.Turno;
 import com.gizlo.turnos.repository.ITurno;
 import java.util.List;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,14 @@ public class TurnoService {
     public Turno obetenerTurnoId(Long id){
         return turnoRepository.findById(id).orElse(null);
     }
+    
+    public String obtenerToken(Turno turno){
+        String data = turno.crearString();
+        return Base64.encodeBase64String(data.getBytes());
+    }
+    
+    
+    
     
     
 }
