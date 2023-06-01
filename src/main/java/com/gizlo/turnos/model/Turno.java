@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,14 @@ public class Turno {
     private String nombre;
     @Column(name = "area")
     private String area;
+    private String usuario;
+    private String clave;
+    private String uuid;
+    
+    @Transient
+    private String token;
+    
+    public String crearString(){
+        return id+","+usuario+","+clave+","+uuid;
+    }
 }
