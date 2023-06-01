@@ -5,10 +5,14 @@ import com.gizlo.turnos.service.TurnoService;
 import jakarta.websocket.server.PathParam;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Paul
  */
 @RestController
+@CrossOrigin(origins="*",methods = {RequestMethod.GET, RequestMethod.POST})
 @RequestMapping(value = "/turnos")
 public class TurnoController {
 
@@ -41,6 +46,18 @@ public class TurnoController {
     public Turno obetnerTurnoId(@PathVariable Long id) throws Exception {
         return turnoController.obetenerTurnoId(id, this.token);
     }
-
     
+    @PostMapping(value = "/add")
+    public Turno addTurno(@RequestBody Turno nuevoTurno) throws Exception{
+        Turno turno = new Turno();
+        turno.setNombre(nuevoTurno.getNombre());
+        turno.setArea(nuevoTurno.getArea());
+        turno.setTramite(nuevoTurno.getTramite());
+        turno.setObservacion(nuevoTurno.getObservacion());
+        turno.setClave(nuevoTurno.getClave());
+        turno.setUsuario(nuevoTurno.getUsuario());
+        return turnoController.crearTurno(turno, this.token);
+    }
+
+        
 }

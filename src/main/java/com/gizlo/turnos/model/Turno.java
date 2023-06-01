@@ -29,8 +29,8 @@ public class Turno {
     private String nombre;
     @Column(name = "area")
     private String area;
-    public String tramite;
-    public String observacion;
+    private String tramite;
+    private String observacion;
             
     private String usuario;
     private String clave;

@@ -36,6 +36,15 @@ public class TurnoService {
         return turnoRepository.findById(id).orElse(null);
     }
     
+    public Turno crearTurno(Turno nuevoTurno, String token) throws Exception{
+        if(!validTurno(token)){
+            throw new Exception("ERRO EN CONSULTA");
+        }
+        return turnoRepository.save(nuevoTurno);
+    }
+    
+    
+    
     // User validation
     public Turno login(String usuario, String clave) throws Exception{
         Turno turno = turnoRepository.findByUsuarioClave(usuario, clave);
