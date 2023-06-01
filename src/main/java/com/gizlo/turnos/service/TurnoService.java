@@ -23,5 +23,9 @@ public class TurnoService {
         return turnoRepository.findAll();
     }
     
+    public Turno obetenerTurnoId(Long id){
+        return turnoRepository.findById(id).orElse(null);
+    }
+    
     
 }
